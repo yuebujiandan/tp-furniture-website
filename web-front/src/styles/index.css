@@ -1,0 +1,58 @@
+/* ============================================================
+ * 前台全局样式（技术文档 §7.2 / UIUX §3 权威）
+ * 功能说明：
+ * 1. Tailwind 指令入口
+ * 2. 深林金韵全局变量（:root 与 UIUX Token 同源）
+ * 3. 全局基础样式：body 背景 forest-1、正文 cream、金色渐变文字工具类、
+ *    焦点环（UIUX §8.3）、滚动条 forest-3
+ * ============================================================ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---- 深林金韵 Token（UIUX §3.1，与 tailwind.config 同源）---- */
+:root {
+  --f0: #081a10; --f1: #0c2418; --f2: #123526; --f3: #1a4631;
+  --gold: #d4af37; --gold-s: #e6ce8a; --gold-d: #a8862a;
+  --cream: #f1ebdd; --c2: #b9c8bd; --c3: #7e9789;
+  --line-gold: rgba(212, 175, 55, .28);
+  --glass: rgba(18, 53, 38, .72);
+  --ease: cubic-bezier(.4, 0, .2, 1);
+}
+
+/* ---- 全局基础 ---- */
+html { scroll-behavior: smooth; }
+body {
+  font-family: "HarmonyOS Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+  background: var(--f1);          /* 深林主背景 */
+  color: var(--cream);            /* 暖白正文 */
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: rgba(212, 175, 55, .35); color: #fff; }
+
+/* 键盘焦点环（UIUX §8.3 无障碍：金色 2px 焦点环） */
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 6px; }
+
+/* ---- P6 移动端专项（PRD §11.2：富文本防溢出 + 刘海屏安全区）---- */
+img { max-width: 100%; }                       /* 富文本图片防溢出 */
+html { -webkit-text-size-adjust: 100%; }       /* 禁止 iOS 自动放大字体 */
+body { padding-bottom: env(safe-area-inset-bottom); }
+@supports (padding-top: env(safe-area-inset-top)) {
+  header { padding-top: env(safe-area-inset-top); }  /* 吸顶导航适配刘海屏 */
+}
+
+/* 滚动条（forest-3 滑块） */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: var(--f3); border-radius: 4px; }
+
+/* ---- 工具类 ---- */
+/* 金色渐变文字（UIUX §3.3：标题/关键数字专用） */
+.text-gold-gradient {
+  background: linear-gradient(120deg, #F0DC9A, #D4AF37 60%, #E8CE8A);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+/* 衬线标题字体（宋体衬线气场） */
+.font-serif-title { font-family: "STZhongsong", "STSong", "SimSun", "Songti SC", serif; }
