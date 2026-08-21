@@ -1,0 +1,40 @@
+/* ============================================================
+ * 后台全局样式（技术文档 §8 / UIUX §6 深林金韵后台密度适配）
+ * 功能说明：
+ * 1. 引入 Tailwind 指令（已禁用 preflight，避免与 AntD 冲突）；
+ * 2. 后台整体深林底色（forest-1），正文 12.5-13.5px 密度适配；
+ * 3. AntD 组件在 ConfigProvider 主题基础上，少量全局覆盖。
+ * ============================================================ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "HarmonyOS Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+  background: #0c2418;   /* forest-1 主背景 */
+  color: #f1ebdd;        /* cream 正文 */
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 统一表单控件盒模型为 border-box（preflight 关闭后手动补）：
+   修复 w-full 输入框在 content-box 下总宽 = 100% + padding + border 超出容器，
+   导致与登录按钮（border-box）宽度不一致（实测差 34px）的问题 */
+input,
+select,
+textarea,
+button {
+  box-sizing: border-box;
+}
+
+/* 滚动条（forest-3） */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: #1a4631; border-radius: 4px; }
+
+/* 金色渐变文字（与前台同源，UIUX §3.3） */
+.text-gold-gradient {
+  background: linear-gradient(120deg, #F0DC9A, #D4AF37 60%, #E8CE8A);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
